@@ -1,6 +1,8 @@
 # ArchGuide
 Тебе оно не надо, правда
 
+# Подготовка
+
 timedatectl set-timezone Europe/Moscow
 timedatectl set-ntp true 
 cfdisk /dev/sda # 
@@ -18,6 +20,8 @@ pacstrap -K /mnt base base-devel linux linux-firmware linux-headers grub efiboot
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 
+# Настраиваем систему
+
 ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 hwclock --systohc
 nano /etc/locale.gen # выбираем локали
@@ -31,9 +35,13 @@ sudo EDITOR=nano visudo
 systemctl enable gdm
 systemctl enable networkmanager
 
+# Ставим загрузчик
+
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 exit
+
+# Завершение
 
 umount -R /mnt
 reboot
